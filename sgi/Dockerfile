@@ -17,6 +17,7 @@ COPY migrations_pg /local/migrations_pg
 COPY sgi/start.sh /local/start.sh
 RUN chmod +x /local/start.sh
 
+# Default when the platform does not set PORT; start.sh maps it to [server].port.
 ENV PORT=8080
-EXPOSE 8080
+EXPOSE 8080 10000
 CMD ["/local/start.sh"]

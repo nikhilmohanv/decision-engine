@@ -4,6 +4,11 @@
 # __diesel_schema_migrations table so a later diesel CLI run agrees with us.
 set -eu
 
+# Render assigns the port via PORT (10000 by default) and routes the service's
+# internal address there; upstream only reads [server].port from config, so map
+# it across. Falls back to the config default when PORT is unset.
+export DECISION_ENGINE__SERVER__PORT="${PORT:-8080}"
+
 export PGHOST="$DECISION_ENGINE__PG_DATABASE__PG_HOST"
 export PGPORT="${DECISION_ENGINE__PG_DATABASE__PG_PORT:-5432}"
 export PGUSER="$DECISION_ENGINE__PG_DATABASE__PG_USERNAME"
